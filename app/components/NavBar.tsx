@@ -1,7 +1,12 @@
+'use client';
+
+import classNames from 'classnames';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FaBug } from 'react-icons/fa';
 
 export default function NavBar() {
+	const pathname = usePathname();
 	const links = [
 		{
 			label: 'Deshboard',
@@ -21,7 +26,11 @@ export default function NavBar() {
 				{links.map((link) => (
 					<li key={link.href}>
 						<Link
-							className='text-zinc-500 hover:text-zinc-800 transition-colors'
+							className={classNames({
+								'text-zinc-900 font-bold': link.href === pathname,
+								'text-zinc-500': link.href !== pathname,
+								'hover:text-zinc-800 transition-colors': true,
+							})}
 							href={link.href}
 						>
 							{link.label}
