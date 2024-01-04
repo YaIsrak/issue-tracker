@@ -17,23 +17,25 @@ export default function NewIssuePage() {
 	const router = useRouter();
 	const { register, control, handleSubmit } = useForm<IssueForm>();
 
+	async function onSubmit(data: any) {
+		await axios
+			.post('/api/issues', data)
+			.then()
+			.then(() => {
+				toast.success('Issue Submited');
+				router.push('/issues');
+			})
+			.catch((error) => {
+				console.log(error.response.data[0].message);
+
+				toast.error(`${error.response.data[0].message}`);
+			});
+	}
+
 	return (
 		<form
 			className='max-w-xl mx-auto space-y-3'
-			onSubmit={handleSubmit(async (data) => {
-				await axios
-					.post('/api/issues', data)
-					.then()
-					.then(() => {
-						toast.success('Data Submited');
-						router.push('/issues');
-					})
-					.catch((error) => {
-						console.log(error.response.data[0].message);
-
-						toast.error(`${error.response.data[0].message}`);
-					});
-			})}
+			onSubmit={handleSubmit((data) => onSubmit(data))}
 		>
 			<TextField.Root>
 				<TextField.Input placeholder='Title' {...register('title')} />
