@@ -1,11 +1,14 @@
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
+//
+import '@/app/theme-config.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 import NavBar from './components/NavBar';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -18,11 +21,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang='en'>
-			<body className={inter.className}>
-				<Theme>
+		<html lang='en' className={inter.variable}>
+			<body>
+				<Theme appearance='inherit' accentColor='violet'>
 					<NavBar />
 					<main>{children}</main>
+					<Toaster />
 				</Theme>
 			</body>
 		</html>
